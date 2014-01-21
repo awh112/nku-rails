@@ -5,7 +5,9 @@ NkuRails::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   
-  resources :posts
+  resources :posts do
+    resources :comments
+  end
 
   root to: 'welcome#index'
 
