@@ -1,1 +1,20 @@
 <h1>Students</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Nickname</th>
+    <th>Email</th>
+    <th>Image</th>
+  </tr>
+  
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= student.name %></td>
+      <td><%= student.nickname %></td>
+      <td><%= student.email %></td>
+      <td><%= student.image %></td>
+      <td><%= image_tag(student.image) %>
+    </tr>
+  <% end %>
+</table>
