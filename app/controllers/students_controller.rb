@@ -7,8 +7,17 @@ class StudentsController < ApplicationController
   
   def create
     @student = Student.new(student_params)
+    
+    require 'digest/md5'
+    email_address = @student.email.downcase
+    
+    hash = Digest::MD5.hexdigest(email_address)
+    
+    @student.image = 'http://www.gravatar.com/avatar/' + hash
+    
     @student.save
-    redirect_to @student
+    flash[:success] = "You have successfully created " + @student.name
+    redirect_to students_path
   end
   
   def show
@@ -35,9 +44,20 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     
     if @student.update(params[:student].permit(:name, :nickname, :email, :image))
-      flash[:success] = "You have successfully edited your account."
+      if @student.image.empty?        
+        require 'digest/md5'
+        email_address = @student.email.downcase
+      
+        hash = Digest::MD5.hexdigest(email_address)
+      
+        @student.image = 'http://www.gravatar.com/avatar/' + hash
+        @student.save
+      end      
+      flash[:success] = "You have successfully edited " + @student.name
       redirect_to students_path
     else
+      flash[:success] = "You have successfully edited " + @student.name
+      redirect_to students_path
       render 'edit'
     end
   end
