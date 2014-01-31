@@ -1,0 +1,29 @@
+<h1>Editing Student</h1>
+
+<%= form_for :student, url: student_path(@student), method: :patch do |s| %>
+<p>
+  <%= s.label :name %>
+  <%= s.text_field :name %>
+</p>
+
+<p>
+  <%= s.label :nickname %>
+  <%= s.text_field :nickname %>
+</p>
+
+<p>
+  <%= s.label :email %>
+  <%= s.text_field :email %>
+</p>
+
+<p>
+  <%= s.label :image %>
+  <%= s.text_field :image %>
+</p>
+
+<p>
+  <%= s.submit %>
+</p>
+<% end %>
+
+<%= link_to 'Back', students_path %>

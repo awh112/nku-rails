@@ -1,20 +1,24 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
 <h1>Students</h1>
 
 <table>
   <tr>
+    <th>Image</th>
     <th>Name</th>
     <th>Nickname</th>
     <th>Email</th>
-    <th>Image</th>
   </tr>
   
   <% @students.each do |student| %>
     <tr>
+      <td><%= image_tag(student.image, size: "100") %></td>
       <td><%= student.name %></td>
       <td><%= student.nickname %></td>
       <td><%= student.email %></td>
-      <td><%= student.image %></td>
-      <td><%= image_tag(student.image) %>
+      <td><%= link_to 'Edit', edit_student_path(student) %></td>
     </tr>
   <% end %>
 </table>

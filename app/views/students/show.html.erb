@@ -14,8 +14,10 @@
 </p>
 
 <p>
-  <strong>Image</strong>
+  <strong>Image URL</strong>
   <%= @student.email %>
 </p>
 
 <%= image_tag(@student.image) %>
+
+<%= link_to 'Edit', edit_student_path(@student) %>
