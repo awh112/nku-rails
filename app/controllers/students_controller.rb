@@ -1,8 +1,6 @@
-class StudentsController < ApplicationController
-  def index
-  end
-  
+class StudentsController < ApplicationController  
   def new
+    @student = Student.new
   end
   
   def create
@@ -16,8 +14,15 @@ class StudentsController < ApplicationController
     @student.image = 'http://www.gravatar.com/avatar/' + hash
     
     @student.save
-    flash[:success] = "You have successfully created " + @student.name
-    redirect_to students_path
+    
+    if @student.save
+      redirect_to students_path, :notice => "You have successfully signed up."
+    else
+      render "new"
+    end
+    
+    #flash[:success] = "You have successfully created " + @student.name
+    #redirect_to students_path
   end
   
   def show
@@ -71,6 +76,6 @@ class StudentsController < ApplicationController
   
   private
   def student_params
-    params.require(:student).permit(:name, :nickname, :email, :image)
+    params.require(:student).permit(:name, :nickname, :email, :image, :password, :password_confirmation)
   end
 end

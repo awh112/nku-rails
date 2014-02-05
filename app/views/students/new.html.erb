@@ -1,6 +1,17 @@
 <h1>New Student</h1>
 
 <%= form_for :student, url: students_path do |s| %>
+  <% if @student.errors.any? %>
+    <div class="alert alert-error">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @student.errors.full_messages %>
+          <li><%= message %>
+        <% end %>
+      </ul>
+    </div>
+   <% end %>
+
 <p>
   <%= s.label :name %>
   <%= s.text_field :name %>
@@ -19,6 +30,16 @@
 <p>
   <%= s.label :image %>
   <%= s.text_field :image %>
+</p>
+
+<p>
+  <%= s.label :password %>
+  <%= s.text_field :password %>
+</p>
+
+<p>
+  <%= s.label :password_confirmation %>
+  <%= s.text_field :password_confirmation %>
 </p>
 
 <p>

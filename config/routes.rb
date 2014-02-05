@@ -7,8 +7,6 @@ NkuRails::Application.routes.draw do
   
   resources :students
   
-
-
   root to: 'welcome#index'
 
   # Example of regular route:
