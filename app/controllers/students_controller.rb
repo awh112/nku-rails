@@ -7,12 +7,10 @@ class StudentsController < ApplicationController
     @student = Student.new(student_params)
     
     require 'digest/md5'
-    email_address = @student.email.downcase
-    
+    email_address = @student.email.downcase    
     hash = Digest::MD5.hexdigest(email_address)
     
-    @student.image = 'http://www.gravatar.com/avatar/' + hash
-    
+    @student.image = 'http://www.gravatar.com/avatar/' + hash    
     @student.save
     
     if @student.save
@@ -20,12 +18,12 @@ class StudentsController < ApplicationController
     else
       render "new"
     end
-    
-    #flash[:success] = "You have successfully created " + @student.name
-    #redirect_to students_path
   end
   
   def show
+    @current = current_user
+    flash[:info] = @current.name
+    
     @student = Student.find(params[:id])
     
     require 'digest/md5'
@@ -38,6 +36,9 @@ class StudentsController < ApplicationController
   end
   
   def index
+    @current = current_user
+    flash[:info] = @current.name
+    
     @students = Student.all
   end
   
