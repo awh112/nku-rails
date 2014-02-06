@@ -2,7 +2,7 @@
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
-<h1>Log in</h1>
+<h1>Log in or <%= link_to 'Sign up', new_student_path %></h1>
 
 <%= form_tag sessions_path do %>
 <p>

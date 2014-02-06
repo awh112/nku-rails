@@ -35,10 +35,7 @@ class StudentsController < ApplicationController
     @student.save
   end
   
-  def index
-    @current = current_user
-    flash[:info] = @current.name
-    
+  def index    
     @students = Student.all
   end
   

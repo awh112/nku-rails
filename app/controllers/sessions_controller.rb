@@ -3,9 +3,6 @@ class SessionsController < ApplicationController
   end
   
   def create    
-    @current = current_user
-    flash[:success] = @current.name
-    
     student = Student.find_by_email(params[:email])
     if student && student.authenticate(params[:password])
       session[:user_id] = student.id
@@ -18,6 +15,6 @@ class SessionsController < ApplicationController
   
   def destroy
     session[:user_id] = nil
-    redirect_to root_url
+    redirect_to students_path
   end
 end
