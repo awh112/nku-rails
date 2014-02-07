@@ -14,6 +14,7 @@ class StudentsController < ApplicationController
     @student.save
     
     if @student.save
+      session[:user_id] = @student.id
       redirect_to students_path, :notice => "You have successfully signed up."
     else
       render "new"
@@ -69,6 +70,8 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     @student.destroy
     
+    session[:user_id] = nil
+    @current_user = nil
     redirect_to students_path
   end
   

@@ -10,8 +10,9 @@ h4 {display: inline}
   
 <h1>Students</h1>
 
-<h4><%= link_to 'Sign up', new_student_path %></h4>
+
 <% if @current == nil %>
+  <h4><%= link_to 'Sign up', new_student_path %></h4>
   <h4><%= link_to 'Sign in', login_path %></h4>
 <% else %>
   <h4><%= link_to 'Sign out', logout_path %></h4>
@@ -32,9 +33,17 @@ h4 {display: inline}
       <td><%= student.nickname %></td>
       <td><%= student.email %></td>
       <% if @current && student.email == @current.email %>
-      <td><%= link_to 'Edit', edit_student_path(student) %></td>
+      <td>
+        <%= link_to edit_student_path(student), class: "btn btn-default" do %>
+          <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to student_path(student), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
+          <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+      </td>
       <% end %>
-      <td><%= link_to 'Destroy', student_path(student), method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 </table>

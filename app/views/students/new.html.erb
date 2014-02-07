@@ -1,5 +1,3 @@
-<h1>New Student</h1>
-
 <%= form_for :student, url: students_path do |s| %>
   <% if @student.errors.any? %>
     <div class="alert alert-error">
@@ -11,6 +9,8 @@
       </ul>
     </div>
    <% end %>
+
+<h1>Sign up</h1>
 
 <p>
   <%= s.label :name %>
@@ -34,12 +34,12 @@
 
 <p>
   <%= s.label :password %>
-  <%= s.text_field :password %>
+  <%= s.password_field :password %>
 </p>
 
 <p>
   <%= s.label :password_confirmation %>
-  <%= s.text_field :password_confirmation %>
+  <%= s.password_field :password_confirmation %>
 </p>
 
 <p>
