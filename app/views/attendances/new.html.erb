@@ -1,0 +1,13 @@
+<%= form_for :attendance, url: attendances_path do |a| %>
+
+<h1>New Attendance</h1>
+
+<p>
+  <%= a.label :seat %>
+  <%= a.text_field :seat %>
+</p>
+
+<p>
+  <%= a.submit %>
+</p>
+<% end %>

@@ -7,6 +7,7 @@ NkuRails::Application.routes.draw do
   
   resources :students
   resources :sessions
+  resources :attendances
   
   root to: 'welcome#index'
   

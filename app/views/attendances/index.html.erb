@@ -1,0 +1,30 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+<% @current = current_user %>
+
+<style>
+  td {padding: 5px}
+  th {padding: 5px}
+</style>
+
+<h1>Attendances</h1>
+
+<table class="studentTable">
+  <tr>
+    <th>Student Name</th>
+    <th>Attended On</th>
+    <th>Seat</th>
+  </tr>
+  
+  <% @attendances.each do |attendance| %>
+    <% if @current && attendance.student_id == @current.id %>
+      <tr>
+        <td><%= @current.name %></td>
+        <td><%= attendance.attended_on %></td>
+        <td><%= attendance.seat %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
