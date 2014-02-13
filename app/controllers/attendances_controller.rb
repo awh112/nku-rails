@@ -8,13 +8,12 @@ class AttendancesController < ApplicationController
     
     @attendance = Attendance.new
     @attendance.seat = params[:attendance][:seat]
-    debugger
     @attendance.attended_on = Time.now
     @attendance.student_id = @current.id
     @attendance.save
     
     if @attendance.save
-      redirect_to attendances_path
+      redirect_to attendances_path, :notice => "You have successfully logged your attendance."
     else
       render "new"
     end

@@ -1,4 +1,17 @@
 <%= form_for :attendance, url: attendances_path do |a| %>
+  <% if @attendance.errors.any? %>
+    <div class="alert alert-error">
+      <h2>Form is invalid</h2>
+      <ul>
+        <!--The default error message for the inclusion wasn't helpful so I changed it-->
+        <% for message in @attendance.errors.full_messages %>
+          <% if @attendance.errors.full_messages.include?("Seat is not included in the list") %>
+            <li>You must choose a seat between 1 and 4</li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+   <% end %>
 
 <h1>New Attendance</h1>
 
