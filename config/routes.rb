@@ -9,7 +9,7 @@ NkuRails::Application.routes.draw do
   resources :sessions
   resources :attendances
   
-  root to: 'welcome#index'
+  root to: 'students#index'
   
   get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"

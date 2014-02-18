@@ -8,15 +8,20 @@ class AttendancesController < ApplicationController
     
     @attendance = Attendance.new
     @attendance.seat = params[:attendance][:seat]
-    @attendance.attended_on = Time.now
+    @attendance.attended_on = Date.today
     @attendance.student_id = @current.id
-    @attendance.save
     
-    if @attendance.save
+    @existingAttendance = Attendance.find_by_attended_on(Date.today)
+    
+    if(@existingAttendance == nil)
+      @attendance.save
       redirect_to attendances_path, :notice => "You have successfully logged your attendance."
     else
+      flash[:error] = "You have already created an attendance for today."
       render "new"
     end
+    
+    
   end
   
   def show
