@@ -6,6 +6,7 @@
 
 <style>
 h4 {display: inline}
+  .seats {background: #Dff0D8; padding: 10px;}
 </style>
   
 <h1>Students</h1>
@@ -18,6 +19,32 @@ h4 {display: inline}
   <h4><%= link_to 'Sign out', logout_path %></h4>
 <% end %>
 
+<h2>In Class</h2>
+<% @seatOne = Student.in_seat(1, Date.today) %>
+<% @seatTwo = Student.in_seat(2, Date.today) %>
+<% @seatThree = Student.in_seat(3, Date.today) %>
+<% @seatFour = Student.in_seat(4, Date.today) %>
+
+<table>
+  <tr>
+    <% @seatOne.each do |s1| %>
+      <td class="seats"><%= s1.nickname %></td>
+    <% end %>
+    <% @seatTwo.each do |s2| %>
+      <td class="seats"><%= s2.nickname %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <% @seatThree.each do |s3| %>
+      <td class="seats"><%= s3.nickname %></td>
+    <% end %>
+    <% @seatFour.each do |s4| %>
+      <td class="seats"><%= s4.nickname %></td>
+    <% end %>
+  </tr>
+</table>
+
+<h2>Absent</h2>
 <table>
   <tr>
     <th></th>

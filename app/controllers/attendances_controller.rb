@@ -11,9 +11,10 @@ class AttendancesController < ApplicationController
     @attendance.attended_on = Date.today
     @attendance.student_id = @current.id
     
-    @existingAttendance = Attendance.find_by_attended_on(Date.today)
+    @existingAttendance = Attendance.where(:attended_on => Date.today,
+      :student_id => @current.id)
     
-    if(@existingAttendance == nil)
+    if(@existingAttendance.first == nil)
       @attendance.save
       redirect_to attendances_path, :notice => "You have successfully logged your attendance."
     else
