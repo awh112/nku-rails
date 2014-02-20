@@ -5,8 +5,10 @@
 <% @current = current_user %>
 
 <style>
-h4 {display: inline}
-  .seats {background: #Dff0D8; padding: 10px;}
+  h4 {display: inline}
+  .seats1 {background: lightgray; padding: 10px}
+  .seats2 {background: gray; padding: 10px}
+  .in-class {border-spacing: 8px;}
 </style>
   
 <h1>Students</h1>
@@ -24,22 +26,23 @@ h4 {display: inline}
 <% @seatTwo = Student.in_seat(2, Date.today) %>
 <% @seatThree = Student.in_seat(3, Date.today) %>
 <% @seatFour = Student.in_seat(4, Date.today) %>
+<% @absentStudents = Student.absent(Date.today) %>
 
-<table>
+<table class="in-class">
   <tr>
     <% @seatOne.each do |s1| %>
-      <td class="seats"><%= s1.nickname %></td>
+      <td class="seats1"><%= image_tag(s1.image, size: "100") %><%= s1.nickname %></td>
     <% end %>
     <% @seatTwo.each do |s2| %>
-      <td class="seats"><%= s2.nickname %></td>
+      <td class="seats2"><%= image_tag(s2.image, size: "100") %><%= s2.nickname %></td>
     <% end %>
   </tr>
   <tr>
     <% @seatThree.each do |s3| %>
-      <td class="seats"><%= s3.nickname %></td>
+      <td class="seats2"><%= image_tag(s3.image, size: "100") %><%= s3.nickname %></td>
     <% end %>
     <% @seatFour.each do |s4| %>
-      <td class="seats"><%= s4.nickname %></td>
+      <td class="seats1"<%= image_tag(s4.image, size: "100") %>><%= s4.nickname %></td>
     <% end %>
   </tr>
 </table>
@@ -53,7 +56,7 @@ h4 {display: inline}
     <th>Email</th>
   </tr>
   
-  <% @students.each do |student| %>
+  <% @absentStudents.each do |student| %>
     <tr>
       <td><%= image_tag(student.image, size: "100") %></td>
       <td><%= student.name %></td>
