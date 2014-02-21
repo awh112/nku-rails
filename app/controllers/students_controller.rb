@@ -10,7 +10,9 @@ class StudentsController < ApplicationController
     email_address = @student.email.downcase    
     hash = Digest::MD5.hexdigest(email_address)
     
-    @student.image = 'http://www.gravatar.com/avatar/' + hash    
+    if(@student.image == nil)
+      @student.image = 'http://www.gravatar.com/avatar/' + hash    
+    end
     @student.save
     
     if @student.save
@@ -22,9 +24,7 @@ class StudentsController < ApplicationController
   end
   
   def show
-    @current = current_user
-    flash[:info] = @current.name
-    
+    @current = current_user    
     @student = Student.find(params[:id])
     
     require 'digest/md5'

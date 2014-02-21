@@ -7,8 +7,34 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  
+<style>
+  .hello-text {display: inline-block; float: none;}
+</style>
 
-<%= yield %>
+<div class="container">
+  <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <div class="navbar-brand">
+        <%= link_to "Bueller", root_path %>
+      </div>
+    </div>
 
+    <div class="collapse navbar-collapse navbar-right">
+      <% if current_user %>
+        <p class="navbar-text current-student hello-text">
+          Hi <%= current_user.name %>! <%= link_to 'Edit Profile', edit_student_path(current_user)%>
+        </p>
+        <%= link_to "Sign out", logout_path, class: "btn btn-default navbar-btn"%>
+        <%= link_to 'I\'m here', new_attendance_path, class: "btn btn-primary navbar-btn" %>
+      <% else %>
+        <%= link_to "Sign up", new_student_path, class: "btn btn-default navbar-btn" %>
+        <%= link_to "Sign in", new_session_path, class: "btn btn-primary navbar-btn" %>
+      <% end %>
+    </div>
+  </nav>
+
+  <%= yield %>
+</div>
 </body>
 </html>
