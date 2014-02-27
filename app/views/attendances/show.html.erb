@@ -1,9 +1,30 @@
-<p>
-  <strong>Seat:</strong>
-  <%= @attendance.seat %>
-</p>
- 
-<p>
-  <strong>Attended On:</strong>
-  <%= @attendance.attended_on %>
-</p>
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+<% @current = current_user %>
+
+<style>
+  td {padding: 5px}
+  th {padding: 5px}
+</style>
+
+<h1>Attendances</h1>
+
+<table class="studentTable">
+  <tr>
+    <th>Student Name</th>
+    <th>Attended On</th>
+    <th>Seat</th>
+  </tr>
+  
+  <% @attendances.each do |attendance| %>
+      <tr>
+        <td><%= link_to attendance.student.name, attendances_path(attendance.student.id) %></td>  
+        <td><%= attendance.attended_on %></td>
+        <td><%= attendance.seat %></td>
+      </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back', students_path %>

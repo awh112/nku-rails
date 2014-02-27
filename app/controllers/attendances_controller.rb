@@ -26,10 +26,14 @@ class AttendancesController < ApplicationController
   end
   
   def show
-    @attendance = Attendance.find(params[:id])
+    @attendances = Attendance.where("student_id = ?", params[:id])
   end
   
   def index
-    @attendances = Attendance.all
+    if(params[:id] == nil)
+      @attendances = Attendance.all
+    else
+      @attendances = Attendance.find(params[:id])
+    end      
   end
 end

@@ -1,8 +1,14 @@
+<%= form_tag students_path, method: :get do %>
+
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
 <% @current = current_user %>
+
+<% if params[:selected_date] == nil %>
+<%  params[:selected_date] = Date.today %>
+<% end %>
 
 <style>
   h4 {display: inline}
@@ -10,15 +16,19 @@
   .seats2 {background: gray; padding: 10px; width: 400px}
   .in-class {border-spacing: 8px;}
 </style>
-  
+
 <h1>Students</h1>
+<div>Date to display: <%= date_field_tag :selected_date, params[:selected_date] %>
+  <%= submit_tag("Refresh", class: "btn btn-default navbar-btn") %>
+  <%= link_to "View all attendances", attendances_path, class: "btn btn-primary navbar-btn"%>
+</div>
 
 <h2>In Class</h2>
-<% @seatOne = Student.in_seat(1, Date.today) %>
-<% @seatTwo = Student.in_seat(2, Date.today) %>
-<% @seatThree = Student.in_seat(3, Date.today) %>
-<% @seatFour = Student.in_seat(4, Date.today) %>
-<% @absentStudents = Student.absent(Date.today) %>
+<% @seatOne = Student.in_seat(1, params[:selected_date]) %>
+<% @seatTwo = Student.in_seat(2, params[:selected_date]) %>
+<% @seatThree = Student.in_seat(3, params[:selected_date]) %>
+<% @seatFour = Student.in_seat(4, params[:selected_date]) %>
+<% @absentStudents = Student.absent(params[:selected_date]) %>
 
 <table class="in-class">
   <tr>
@@ -69,3 +79,4 @@
     </tr>
   <% end %>
 </table>
+<% end %>

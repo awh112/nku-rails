@@ -3,11 +3,15 @@ class Student < ActiveRecord::Base
   
   has_many :attendances, dependent: :destroy
   
-  def self.in_seat(seat, date)
-    Student.joins(:attendances).where(attendances: {seat: seat, attended_on: date})
+  def self.in_seat(seat, now=Date.today)
+    present(now).where('attendances.seat = ?', seat)
   end
-  
-  def self.absent(date)
-    Student.joins(:attendances).where.not(attendances: {attended_on: date})
+
+  def self.absent(now=Date.today)
+    where.not(id: present(now))
+  end
+
+  def self.present(now=Date.today)
+    joins(:attendances).where(attendances: {attended_on: now})
   end
 end
