@@ -17,6 +17,10 @@
   .in-class {border-spacing: 8px;}
 </style>
 
+<% if params[:index] == 'true' %>
+<% debugger %>
+<p>yay</p>
+<% end %>
 <h1>Students</h1>
 <div>Date to display: <%= date_field_tag :selected_date, params[:selected_date] %>
   <%= submit_tag("Refresh", class: "btn btn-default navbar-btn") %>

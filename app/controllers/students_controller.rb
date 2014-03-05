@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController  
+  skip_before_action :require_login, only: [:new, :create, :index]
+  
   def new
     @student = Student.new
   end
@@ -24,7 +26,8 @@ class StudentsController < ApplicationController
   end
   
   def show
-    @current = current_user    
+    @current = current_user
+    
     @student = Student.find(params[:id])
     
     require 'digest/md5'

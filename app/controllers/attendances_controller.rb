@@ -1,4 +1,6 @@
 class AttendancesController < ApplicationController
+  skip_before_action :require_login, only: [:new, :create]
+  
   def new
     @attendance = Attendance.new
   end
@@ -11,10 +13,10 @@ class AttendancesController < ApplicationController
     @attendance.attended_on = Date.today
     @attendance.student_id = @current.id
     
-    @existingAttendance = Attendance.where(:attended_on => Date.today,
+    @existing_attendance = Attendance.where(:attended_on => Date.today,
       :student_id => @current.id)
     
-    if(@existingAttendance.first == nil)
+    if(@existing_attendance.first == nil)
       @attendance.save
       redirect_to attendances_path, :notice => "You have successfully logged your attendance."
     else
