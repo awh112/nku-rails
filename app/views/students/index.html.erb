@@ -70,21 +70,29 @@
 
 <table class="in-class">
   <tr>
-    <td class="seats1 default">
+    <% if !@seat_one.any? %>
+      <td class="seats1 default">
+    <% end %>
     <% @seat_one.each do |s1| %>
     <td class="seats1"><%= image_tag(s1.image, size: "100") %><%= s1.nickname %></td>
     <% end %>    
-    <td class="seats1 default">
+    <% if !@seat_two.any? %>
+      <td class="seats1 default">
+    <% end %>
     <% @seat_two.each do |s2| %>
     <td class="seats2"><%= image_tag(s2.image, size: "100") %><%= s2.nickname %></td>
     <% end %>
   </tr>
   <tr>
-    <td class="seats1 default">
+    <% if !@seat_three.any? %>
+      <td class="seats1 default">
+    <% end %>
     <% @seat_three.each do |s3| %>
       <td class="seats2"><%= image_tag(s3.image, size: "100") %><%= s3.nickname %></td>
     <% end %>
-    <td class="seats1 default">
+    <% if !@seat_four.any? %>
+      <td class="seats1 default">
+    <% end %>
     <% @seat_four.each do |s4| %>
       <td class="seats1"><%= image_tag(s4.image, size: "100") %><%= s4.nickname %></td>
     <% end %>

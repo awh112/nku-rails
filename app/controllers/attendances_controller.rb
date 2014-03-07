@@ -10,7 +10,7 @@ class AttendancesController < ApplicationController
     
     @attendance = Attendance.new
     @attendance.seat = params[:attendance][:seat]
-    @attendance.attended_on = Date.today
+    @attendance.attended_on = Time.zone.today
     @attendance.student_id = @current.id
     
     @existing_attendance = Attendance.where(:attended_on => Date.today,
