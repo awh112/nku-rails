@@ -7,7 +7,7 @@
 <% @current = current_user %>
 
 <% if params[:selected_date] == nil %>
-<%  params[:selected_date] = Date.today %>
+<%  params[:selected_date] = Time.zone.today %>
 <% end %>
 
 <style>
