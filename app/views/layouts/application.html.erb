@@ -10,16 +10,20 @@
   
 <style>
   .hello-text {display: inline-block; float: none;}
+  .smaller {font-size: 115%; padding-right: 10px;}
 </style>
 
 <div class="container">
   <nav class="navbar navbar-default">
     <div class="navbar-header">
-      <div class="navbar-brand">
+      <div class="navbar-brand smaller">
         <%= link_to "Bueller Home", root_path %>
-        <%= link_to "Seating Chart", root_path %>cont
-        <%= link_to "All Attendances", attendances_path %>
-        <%= link_to "Student Index", root_path(:index => 'true') %>        
+        <% if current_user %>
+          <%= link_to "Seating Chart", root_path %>
+          <%= link_to "All Attendances", attendances_path %>
+          <%= link_to "Student Index", root_path(:index => 'true') %>     
+          <%= link_to "Edit your profile", edit_student_path(current_user) %>
+        <% end %>
       </div>
     </div>
 

@@ -15,54 +15,23 @@
   .seats1 {background: lightgray; padding: 10px; width: 400px}
   .seats2 {background: gray; padding: 10px; width: 400px}
   .in-class {border-spacing: 8px;}
+  .default {border: solid white 2px}
 </style>
 
+<!-- conditionally show the student index here based on a parameter passed in the query -->
 <% if params[:index] == 'true' %>
-<% debugger %>
-<p>yay</p>
-<% end %>
+
+<% @all_students = Student.all %>
+
 <h1>Students</h1>
-<div>Date to display: <%= date_field_tag :selected_date, params[:selected_date] %>
-  <%= submit_tag("Refresh", class: "btn btn-default navbar-btn") %>
-  <%= link_to "View all attendances", attendances_path, class: "btn btn-primary navbar-btn"%>
-</div>
-
-<h2>In Class</h2>
-<% @seatOne = Student.in_seat(1, params[:selected_date]) %>
-<% @seatTwo = Student.in_seat(2, params[:selected_date]) %>
-<% @seatThree = Student.in_seat(3, params[:selected_date]) %>
-<% @seatFour = Student.in_seat(4, params[:selected_date]) %>
-<% @absentStudents = Student.absent(params[:selected_date]) %>
-
-<table class="in-class">
-  <tr>
-    <% @seatOne.each do |s1| %>
-    <td class="seats1"><%= image_tag(s1.image, size: "100") %><%= s1.nickname %></td>
-    <% end %>
-    <% @seatTwo.each do |s2| %>
-    <td class="seats2"><%= image_tag(s2.image, size: "100") %><%= s2.nickname %></td>
-    <% end %>
-  </tr>
-  <tr>
-    <% @seatThree.each do |s3| %>
-      <td class="seats2"><%= image_tag(s3.image, size: "100") %><%= s3.nickname %></td>
-    <% end %>
-    <% @seatFour.each do |s4| %>
-      <td class="seats1"><%= image_tag(s4.image, size: "100") %><%= s4.nickname %></td>
-    <% end %>
-  </tr>
-</table>
-
-<h2>Absent</h2>
 <table>
   <tr>
     <th></th>
     <th>Name</th>
     <th>Nickname</th>
     <th>Email</th>
-  </tr>
-  
-  <% @absentStudents.each do |student| %>
+  </tr>  
+  <% @all_students.each do |student| %>
     <tr>
       <td><%= image_tag(student.image, size: "100") %></td>
       <td><%= student.name %></td>
@@ -83,4 +52,74 @@
     </tr>
   <% end %>
 </table>
+
+<!-- if it is not specified as index, just show the seating chart page -->
+<% else %>
+<h1>Students</h1>
+<div>Date to display: <%= date_field_tag :selected_date, params[:selected_date] %>
+  <%= submit_tag("Refresh", class: "btn btn-default navbar-btn") %>
+  <%= link_to "View all attendances", attendances_path, class: "btn btn-primary navbar-btn"%>
+</div>
+
+<h2>In Class</h2>
+<% @seat_one = Student.in_seat(1, params[:selected_date]) %>
+<% @seat_two = Student.in_seat(2, params[:selected_date]) %>
+<% @seat_three = Student.in_seat(3, params[:selected_date]) %>
+<% @seat_four = Student.in_seat(4, params[:selected_date]) %>
+<% @absent_students = Student.absent(params[:selected_date]) %>
+
+<table class="in-class">
+  <tr>
+    <td class="seats1 default">
+    <% @seat_one.each do |s1| %>
+    <td class="seats1"><%= image_tag(s1.image, size: "100") %><%= s1.nickname %></td>
+    <% end %>    
+    <td class="seats1 default">
+    <% @seat_two.each do |s2| %>
+    <td class="seats2"><%= image_tag(s2.image, size: "100") %><%= s2.nickname %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td class="seats1 default">
+    <% @seat_three.each do |s3| %>
+      <td class="seats2"><%= image_tag(s3.image, size: "100") %><%= s3.nickname %></td>
+    <% end %>
+    <td class="seats1 default">
+    <% @seat_four.each do |s4| %>
+      <td class="seats1"><%= image_tag(s4.image, size: "100") %><%= s4.nickname %></td>
+    <% end %>
+  </tr>
+</table>
+
+<h2>Absent</h2>
+<table>
+  <tr>
+    <th></th>
+    <th>Name</th>
+    <th>Nickname</th>
+    <th>Email</th>
+  </tr>
+  
+  <% @absent_students.each do |student| %>
+    <tr>
+      <td><%= image_tag(student.image, size: "100") %></td>
+      <td><%= student.name %></td>
+      <td><%= student.nickname %></td>
+      <td><%= student.email %></td>
+      <% if @current && student.email == @current.email %>
+      <td>
+        <%= link_to edit_student_path(student), class: "btn btn-default" do %>
+          <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to student_path(student), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
+          <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+      </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<% end %>
 <% end %>
