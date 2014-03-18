@@ -50,7 +50,7 @@ class StudentsController < ApplicationController
   def update
     @student = Student.find(params[:id])
     
-    if @student.update(params[:student].permit(:name, :nickname, :email, :image))
+    if @student.update(params[:student].permit(:name, :nickname, :email, :image, :is_admin))
       if @student.image.empty?        
         require 'digest/md5'
         email_address = @student.email.downcase

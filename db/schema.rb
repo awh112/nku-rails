@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207224139) do
+ActiveRecord::Schema.define(version: 20140318231938) do
+
+  create_table "assignments", force: true do |t|
+    t.integer "student_id"
+    t.string  "name"
+    t.integer "score"
+    t.integer "total"
+  end
+
+  add_index "assignments", ["student_id"], name: "index_assignments_on_student_id"
 
   create_table "attendances", force: true do |t|
     t.datetime "created_at"
@@ -48,6 +57,7 @@ ActiveRecord::Schema.define(version: 20140207224139) do
     t.string   "password_digest"
     t.boolean  "absent"
     t.integer  "in_seat"
+    t.boolean  "is_admin"
   end
 
 end

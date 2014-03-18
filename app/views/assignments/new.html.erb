@@ -1,0 +1,39 @@
+<%= form_for :assignment, url: assignments_path do |a| %>
+  <% if @assignment.errors.any? %>
+    <div class="alert alert-error">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @assignment.errors.full_messages %>
+          <li><%= message %>
+        <% end %>
+      </ul>
+    </div>
+   <% end %>
+
+<h1>New Assignment</h1>
+
+<p>
+  <%= s.label :student %>
+  <%= s.text_field :student %>
+</p>
+
+<p>
+  <%= s.label :name %>
+  <%= s.text_field :name %>
+</p>
+
+<p>
+  <%= s.label :score %>
+  <%= s.text_field :score %>
+</p>
+
+<p>
+  <%= s.label :total %>
+  <%= s.text_field :total %>
+</p>
+
+<p>
+  <%= s.submit %>
+</p>
+
+<% end %>
