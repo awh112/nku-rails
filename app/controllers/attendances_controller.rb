@@ -22,9 +22,7 @@ class AttendancesController < ApplicationController
     else
       flash[:error] = "You have already created an attendance for today."
       render "new"
-    end
-    
-    
+    end    
   end
   
   def show
