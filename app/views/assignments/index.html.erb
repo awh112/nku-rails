@@ -3,5 +3,36 @@
 <% end %>
 
 <% @current = current_user %>
+<% @student_name = "" %>
+
+<style>
+  td {padding: 5px}
+  th {padding: 5px}
+</style>
 
 <h1>Assignments</h1>
+
+<table>
+  <tr>
+    <th>Student Name</th>
+    <th>Assignment Name</th>
+    <th>Score</th>
+    <th>Total</th>
+  </tr>
+  
+  <% if @assignments %>
+    <% @assignments.to_a.each do |assignment| %>
+        <% if assignment.student != nil %>
+          <% @student_name = assignment.student.name %>
+        <% end %>  
+        <tr>
+          <td><%= @student_name %></td>
+          <td><%= assignment.name %></td>
+          <td><%= assignment.score %></td>
+          <td><%= assignment.total %></td>
+        </tr>
+    <% end %>  
+  <% end %>
+</table>
+
+<%= link_to 'Back', students_path %>

@@ -1,10 +1,14 @@
 <%= form_for :assignment, url: assignments_path do |a| %>
 
+<% @student_array = Student.all.to_a %>
+<% @name_array = [] %>
+<% @student_array.each { |s| @name_array.push(s.name) } %>
+
 <h1>New Assignment</h1>
 
 <p>
   <%= a.label :student %>
-  <%= a.text_field :student %>
+  <%= select(:student, :student_id, @name_array) %>
 </p>
 
 <p>

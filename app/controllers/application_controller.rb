@@ -16,5 +16,13 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  private
+  def is_admin
+    unless current_user.is_admin
+      flash[:error] = "Unauthorized"
+      redirect_to login_path
+    end
+  end
+  
   helper_method :current_user
 end

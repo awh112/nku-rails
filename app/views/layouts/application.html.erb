@@ -19,11 +19,13 @@
       <div class="navbar-brand smaller">
         <%= link_to "Bueller Home", root_path %>
         <% if current_user %>
-          <%= link_to "Seating Chart", root_path %>
-          <%= link_to "All Attendances", attendances_path %>
-          <%= link_to "Student Index", root_path(:index => 'true') %>
+          | <%= link_to "Seating Chart", root_path %> |
+          <%= link_to "All Attendances", attendances_path %> | 
+          <%= link_to "Student Index", root_path(:index => 'true') %> |
           <% if (current_user.is_admin) %>
-            <%= link_to "New Assignment", new_assignment_path %>
+            <%= link_to "New Assignment", new_assignment_path %> |
+          <% else %>
+            <%= link_to "My Assignments", assignments_path(:id => current_user.id) %> |
           <% end %>
           <%= link_to "Edit your profile", edit_student_path(current_user) %>
         <% end %>
