@@ -30,8 +30,7 @@ class AssignmentsController < ApplicationController
     if(params[:id] == nil)
       @assignments = Assignment.all
     else
-      @assignments = Assignment.find_by_student_id(params[:id])
+      @assignments = Assignment.where("student_id = ?", params[:id])
     end      
-  end
-  
+  end  
 end

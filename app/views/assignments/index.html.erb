@@ -1,9 +1,16 @@
+<%= form_tag assignments_path, method: :get do %>
+
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
 <% @current = current_user %>
 <% @student_name = "" %>
+<% @total_points = 0 %>
+<% @total_earned = 0 %>
+<% @student_array = Student.all.to_a %>
+<% @name_array = [] %>
+<% @student_array.each { |s| @name_array.push(s.name) } %>
 
 <style>
   td {padding: 5px}
@@ -12,27 +19,54 @@
 
 <h1>Assignments</h1>
 
-<table>
-  <tr>
-    <th>Student Name</th>
-    <th>Assignment Name</th>
-    <th>Score</th>
-    <th>Total</th>
-  </tr>
-  
-  <% if @assignments %>
-    <% @assignments.to_a.each do |assignment| %>
-        <% if assignment.student != nil %>
-          <% @student_name = assignment.student.name %>
-        <% end %>  
-        <tr>
-          <td><%= @student_name %></td>
-          <td><%= assignment.name %></td>
-          <td><%= assignment.score %></td>
-          <td><%= assignment.total %></td>
-        </tr>
-    <% end %>  
+<% if(@current.is_admin) %>
+  <h3>Select a student to view their assignments:</h3>
+  <%= select(:student, :student_id, @name_array) %>
+  <%= submit_tag("Refresh", class: "btn btn-default navbar-btn") %>
+<% end %>
+
+<% if(@current.id.to_s == params[:id] || @current.is_admin) %>
+  <table>
+    <tr>
+      <th>Student Name</th>
+      <th>Assignment Name</th>
+      <th>Score</th>
+      <th>Total</th>
+    </tr>
+    
+    <% if(params[:commit] == "Refresh") %>
+      <% @student = Student.find_by_name(params[:student][:student_id]) %>
+      <% @assignments = Assignment.where("student_id = ?", @student.id) %>
+    <% end %>
+    
+    <% if @assignments %>
+      <% @assignments.each do |assignment| %>
+          <% @total_points += assignment.total %>
+          <% @total_earned += assignment.score %>
+          <% if assignment.student != nil %>
+            <% @student_name = assignment.student.name %>
+          <% end %>  
+          <tr>
+            <td><%= @student_name %></td>
+            <td><%= assignment.name %></td>
+            <td><%= assignment.score %></td>
+            <td><%= assignment.total %></td>
+          </tr>
+      <% end %>  
+    <% end %>
+  </table>
+  <br/><br/>
+  <% if(!@current.is_admin) %>
+    <table>
+      <tr>
+        <td><h4>Current Grade</h4></td>
+        <td><%= (@total_earned / @total_points) * 100 %>%</td>
+      </tr>
+    </table>
   <% end %>
-</table>
+<% else %>
+  <h4>You are not authorized to view these grades.</h4>
+<% end %>
 
 <%= link_to 'Back', students_path %>
+<% end %>

@@ -24,6 +24,7 @@
           <%= link_to "Student Index", root_path(:index => 'true') %> |
           <% if (current_user.is_admin) %>
             <%= link_to "New Assignment", new_assignment_path %> |
+            <%= link_to "All Assignments", assignments_path %> |
           <% else %>
             <%= link_to "My Assignments", assignments_path(:id => current_user.id) %> |
           <% end %>
