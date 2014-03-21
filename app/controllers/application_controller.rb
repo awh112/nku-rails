@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def is_admin
     unless current_user.is_admin
       flash[:error] = "Unauthorized"
-      redirect_to login_path
+      redirect_to students_path
     end
   end
   

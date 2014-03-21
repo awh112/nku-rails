@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
-  skip_before_action :is_admin, only: [:new]
+  before_action :require_login, only: [:new, :create]
+  before_action :is_admin, only: [:new]
   
   def new
     @assignment = Assignment.new
