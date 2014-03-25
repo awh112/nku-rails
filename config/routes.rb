@@ -9,7 +9,7 @@ NkuRails::Application.routes.draw do
   resources :sessions
   resources :attendances
   resources :assignments
-  resources :upload
+  resources :uploads
   
   root to: 'students#index'
   
