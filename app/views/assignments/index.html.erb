@@ -60,7 +60,13 @@
     <table>
       <tr>
         <td><h4>Current Grade</h4></td>
-        <td><%= (@total_earned / @total_points) * 100 %>%</td>
+        <td><%=
+          if @total_points.zero?
+            0
+          else
+            (@total_earned / @total_points) * 100
+          end
+        %>%</td>
       </tr>
     </table>
   <% end %>
