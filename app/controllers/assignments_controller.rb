@@ -32,5 +32,10 @@ class AssignmentsController < ApplicationController
     else
       @assignments = Assignment.where("student_id = ?", params[:id])
     end      
-  end  
+  end
+  
+  def upload
+    uploaded_io = params[:upload_file]
+    debugger
+  end
 end

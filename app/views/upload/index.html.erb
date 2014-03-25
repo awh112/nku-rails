@@ -1,0 +1,8 @@
+<%= form_tag({action: :upload}, multipart: true) do %>
+  <% if(current_user.is_admin) %>
+    <%= file_field_tag 'file' %>
+    <%= submit_tag 'Import' %>
+  <% else %>
+    <h2>You are not authorized to view this page.</h2>
+  <% end %>
+<% end %>
