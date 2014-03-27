@@ -6,7 +6,9 @@ class UploadsController < ApplicationController
     require 'csv'
     
     @uploaded_doc = params[:file]
-    Assignment.import(@uploaded_doc)
+    @assignments_created = Assignment.import(@uploaded_doc)
+    debugger
+    redirect_to assignments_path, :notice => @assignments_created.to_s + " assignments were created"
   end
   
   def show

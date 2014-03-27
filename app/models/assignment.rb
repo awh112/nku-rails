@@ -3,30 +3,22 @@ class Assignment < ActiveRecord::Base
   
   require 'csv'
   
-  def self.import(file)
-    #@spreadsheet = open_spreadsheet(file)
-    #@header = spreadsheet.row(1)
-    
+  def self.import(file)    
     @original_filename = file.original_filename
-        
-    File.open(Rails.root.join('public', 'uploads', file.original_filename), 'r') do |file|
-      file.write(file.read)
-
+    @num_rows = 0
     
-      debugger
-      CSV.foreach("public/" + @original_filename) do |row|
-      debugger        
-    end      
+    CSV.foreach(file.path, headers: true) do |row|
+      @student = Student.find_by_email(row["Email"]) || Student.new
+      
+      @new_assignment = Assignment.new
+      @new_assignment.student_id = @student.id
+      @new_assignment.name = row["Assignment Name"]
+      @new_assignment.total = row["Total"]
+      @new_assignment.score = row["Score"]
+      @new_assignment.save
+      
+      @num_rows += 1
     end
-  end
-  
-  def self.open_spreadsheet(file)
-    debugger
-    case File.extname(file.original_filename)
-    when ".csv" then Csv.new(file.path, nil, :ignore)
-    when ".xls" then Excel.new(file.path, nil, :ignore)
-    when ".xlsx" then Excelx.new(file.path, nil, :ignore)
-    else raise "Unknown file type: #{file.original_filename}"
-    end
+    return @num_rows
   end
 end
