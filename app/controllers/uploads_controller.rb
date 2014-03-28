@@ -5,10 +5,14 @@ class UploadsController < ApplicationController
   def create
     require 'csv'
     
-    @uploaded_doc = params[:file]
-    @assignments_created = Assignment.import(@uploaded_doc)
-    debugger
-    redirect_to assignments_path, :notice => @assignments_created.to_s + " assignments were created"
+    if(params[:file] == nil)
+      flash[:error] = "No file was chosen"
+      redirect_to uploads_path
+    else    
+      @uploaded_doc = params[:file]
+      @assignments_created = Assignment.import(@uploaded_doc)
+      redirect_to assignments_path, :notice => @assignments_created.to_s + " assignments were created"
+    end
   end
   
   def show

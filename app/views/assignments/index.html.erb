@@ -6,8 +6,8 @@
 
 <% @current = current_user %>
 <% @student_name = "" %>
-<% @total_points = 0 %>
-<% @total_earned = 0 %>
+<% @total_points = 0.0 %>
+<% @total_earned = 0.0 %>
 <% @student_array = Student.all.to_a %>
 <% @name_array = [] %>
 <% @student_array.each { |s| @name_array.push(s.name) } %>

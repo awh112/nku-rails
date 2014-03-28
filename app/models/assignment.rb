@@ -10,14 +10,22 @@ class Assignment < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       @student = Student.find_by_email(row["Email"]) || Student.new
       
-      @new_assignment = Assignment.new
-      @new_assignment.student_id = @student.id
-      @new_assignment.name = row["Assignment Name"]
-      @new_assignment.total = row["Total"]
-      @new_assignment.score = row["Score"]
-      @new_assignment.save
+      #find if this assignment has been uploaded for the current student
+      @existing_assignment = Assignment.where("student_id = ? AND name=?", @student.id, row["Assignment Name"]).first
       
-      @num_rows += 1
+      if(@existing_assignment != nil)
+        @existing_assignment.total = row["Total"]
+        @existing_assignment.score = row["Score"]
+        @existing_assignment.save
+      else
+        @new_assignment = Assignment.new
+        @new_assignment.student_id = @student.id
+        @new_assignment.name = row["Assignment Name"]
+        @new_assignment.total = row["Total"]
+        @new_assignment.score = row["Score"]
+        @new_assignment.save
+        @num_rows += 1
+      end      
     end
     return @num_rows
   end
